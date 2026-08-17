@@ -1,0 +1,403 @@
+/* ============================================================
+   SmartQ Admin Dashboard
+   Layout: 3-row stacked design
+   Row 1 → Stat cards (horizontal strip)
+   Row 2 → Graph (left) + Colleges (right)
+   Row 3 → Recent Activity (full width)
+   ============================================================ */
+
+/* ── Dashboard Container ────────────────────────────────────── */
+.admin-layout {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  background: #f8fafc;
+  position: relative;
+}
+
+/* Signature Brand Accent */
+.admin-layout::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(28, 90, 223, 0.05) 0%, rgba(248, 250, 252, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.admin-layout::after {
+  content: "";
+  position: absolute;
+  bottom: -10%;
+  left: 20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.03) 0%, rgba(248, 250, 252, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.admin-main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-content.dash {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 40px;
+  overflow: hidden;
+  background: transparent;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROW 1 — STAT CARDS
+   ═══════════════════════════════════════════════════════════════ */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(28, 90, 223, 0.08);
+  border-color: rgba(28, 90, 223, 0.1);
+}
+
+.stat-card-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.stat-card-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.stat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.stat-card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROW 2 — PANELS
+   ═══════════════════════════════════════════════════════════════ */
+.dash-panels {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr; /* Refined balance */
+  gap: 24px;
+  height: 350px; /* More compact height */
+  max-width: 1200px; /* Prevent excessive horizontal stretching */
+  flex-shrink: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   GRAPH CARD
+   ═══════════════════════════════════════════════════════════════ */
+.graph-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.graph-card .widget-header {
+  margin-bottom: 30px;
+}
+
+.graph-period {
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  background: rgba(28, 90, 223, 0.05);
+  padding: 6px 14px;
+  border-radius: 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CHARTS & ANALYTICS
+   ═══════════════════════════════════════════════════════════════ */
+.chart-card {
+  background: white;
+  border-radius: 24px;
+  padding: 20px; /* Slightly reduced padding */
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(28, 90, 223, 0.08);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.chart-title-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+}
+
+.chart-container {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLLEGES CARD
+   ═══════════════════════════════════════════════════════════════ */
+.colleges-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.colleges-card .widget-header {
+  margin-bottom: 24px;
+}
+
+.colleges-total {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 6px 14px;
+  border-radius: 10px;
+}
+
+.colleges-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.college-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.college-item:last-child {
+  border-bottom: none;
+}
+
+.college-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.college-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.college-name {
+  font-size: var(--font-xs);
+  font-weight: 500;
+  color: var(--text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.college-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.college-bar-track {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.college-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.college-count {
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: var(--text-main);
+  min-width: 35px;
+  text-align: right;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RECENT ACTIVITY
+   ═══════════════════════════════════════════════════════════════ */
+.dash-activity {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 30px;
+}
+
+.widget-header h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR STYLING
+   ═══════════════════════════════════════════════════════════════ */
+.colleges-items::-webkit-scrollbar,
+.activity-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.colleges-items::-webkit-scrollbar-track,
+.activity-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.colleges-items::-webkit-scrollbar-thumb,
+.activity-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+
+.colleges-items::-webkit-scrollbar-thumb:hover,
+.activity-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 1200px) {
+  .dash-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-panels {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .admin-content.dash {
+    padding: 0 var(--space-md) var(--space-md);
+  }
+
+  .dash {
+    gap: var(--space-md);
+  }
+
+  .dash-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .graph-summary {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+}
